@@ -1,0 +1,10 @@
+{
+  "name": "vip-guest-serverless",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "busboy": "^1.6.0",
+    "xlsx": "^0.18.5"
+  }
+}

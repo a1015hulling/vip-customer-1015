@@ -1,0 +1,15 @@
+[build]
+  publish = "frontend"
+  functions = "netlify/functions"
+
+# 讓 /api/contacts、/api/upload 實際呼叫對應的 /.netlify/functions/...，
+# 前端程式碼可以用簡短好記的路徑，不用寫一長串 .netlify/functions/...
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# 每天自動執行一次 keepalive，向 Supabase 發出一次查詢，
+# 避免 Supabase 免費方案因為「連續 7 天無活動」而自動暫停專案。
+[functions."keepalive"]
+  schedule = "@daily"
