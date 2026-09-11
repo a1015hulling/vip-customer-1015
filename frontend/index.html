@@ -208,8 +208,15 @@
                     throw new Error('無法載入資料');
                 }
                 data = await response.json();
-                if (Array.isArray(data) && data.length > 0) {
-                    columns = Object.keys(data[0]);
+                // 欄位清單要掃過「全部」資料列去收集，不能只看第一筆：
+                // 如果之後合併了好幾個 Excel（欄位不完全一樣），
+                // 只看第一筆的話，後面資料才有的欄位（例如「公務機」）會抓不到、畫面就不會顯示。
+                if (Array.isArray(data)) {
+                    const columnSet = new Set();
+                    data.forEach(row => {
+                        Object.keys(row).forEach(key => columnSet.add(key));
+                    });
+                    columns = Array.from(columnSet);
                 }
             } catch (error) {
                 console.error('載入資料時發生錯誤:', error);
